@@ -44,7 +44,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
         }
 
         header {
@@ -248,31 +247,6 @@
             justify-content: space-between;
         }
 
-        /* Watermark Styles */
-        .watermark {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: rgba(0, 0, 0, 0.3);
-            font-size: 0.9rem;
-            font-style: italic;
-            z-index: 100;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: var(--transition);
-        }
-
-        .dark-mode .watermark {
-            color: rgba(255, 255, 255, 0.3);
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .watermark:hover {
-            color: var(--primary-color);
-            background-color: var(--container-bg);
-        }
-
         @media (max-width: 600px) {
             .options {
                 grid-template-columns: 1fr;
@@ -288,12 +262,6 @@
             
             .category-selector {
                 flex-direction: column;
-            }
-            
-            .watermark {
-                bottom: 10px;
-                right: 10px;
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -365,9 +333,6 @@
             </button>
         </div>
     </div>
-
-    <!-- Watermark -->
-    <div class="watermark" id="watermark">Created by Cahya. S</div>
 
     <script>
         // Database besar asosiasi yang sangat bervariasi, dikelompokkan berdasarkan kategori
@@ -485,7 +450,6 @@
         const backBtn = document.getElementById('backBtn');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const mainContainer = document.getElementById('mainContainer');
-        const watermark = document.getElementById('watermark');
 
         // Variabel kontrol
         let availableAssociations = [];
@@ -755,7 +719,7 @@
                 return;
             }
             
-            scoreHistory.forEach((score, index) {
+            scoreHistory.forEach((score, index) => {
                 const historyItem = document.createElement('div');
                 historyItem.classList.add('history-item');
                 
