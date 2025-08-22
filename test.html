@@ -1,358 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Test</title>
-    <style>
-        :root {
-            --bg-color: #f5f5f5;
-            --text-color: #333;
-            --container-bg: #ffffff;
-            --primary-color: #6a1b9a;
-            --primary-light: #9c4dcc;
-            --secondary-color: #e0e0e0;
-            --correct-color: #4caf50;
-            --wrong-color: #f44336;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang Kesempatan Kedua</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .dark-mode {
-            --bg-color: #121212;
-            --text-color: #f3e5f5;
-            --container-bg: #1e1e1e;
-            --primary-color: #9c4dcc;
-            --primary-light: #ba68c8;
-            --secondary-color: #444;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 30px 15px;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: var(--transition);
-        }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+      letter-spacing: 1px;
+      animation: fadeDown 0.8s ease forwards;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .content {
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 25px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      line-height: 1.7;
+      font-size: 1.05rem;
+      text-align: left;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.4s;
+    }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 20px;
-        }
+    .content p {
+      margin-bottom: 15px;
+    }
 
-        h1 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-        }
+    footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #e5e5e5;
+      max-width: 650px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 1.2s;
+    }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
+    footer p {
+      margin-bottom: 8px;
+    }
 
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    footer small {
+      font-style: italic;
+      opacity: 0.8;
+    }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-        }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .dark-mode-toggle {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .container {
-            background-color: var(--container-bg);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 800px;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .start-screen {
-            text-align: center;
-        }
-
-        .start-title {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .category-selector {
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .category-btn {
-            padding: 10px 15px;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            background: transparent;
-            color: var(--primary-color);
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .category-btn:hover, .category-btn.selected {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .start-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .display-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .pair-display {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .number {
-            color: var(--primary-color);
-        }
-
-        .word {
-            color: #e91e63;
-            margin-top: 15px;
-        }
-
-        .question-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .question {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .option {
-            padding: 15px;
-            border-radius: 15px;
-            background-color: var(--secondary-color);
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .option:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-
-        .option.correct {
-            background-color: var(--correct-color);
-            color: white;
-        }
-
-        .option.wrong {
-            background-color: var(--wrong-color);
-            color: white;
-        }
-
-        .controls {
-            margin-top: 20px;
-        }
-
-        .history-container {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            margin-top: 20px;
-            background-color: var(--container-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-        }
-
-        .history-title {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .history-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .history-item {
-            background-color: var(--secondary-color);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        @media (max-width: 600px) {
-            .options {
-                grid-template-columns: 1fr;
-            }
-            
-            .pair-display {
-                font-size: 2.5rem;
-            }
-            
-            .start-buttons {
-                flex-direction: column;
-            }
-            
-            .category-selector {
-                flex-direction: column;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .content {
+        padding: 20px;
+        font-size: 1rem;
+      }
+      footer {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Memory Test</h1>
-        <div class="nav-buttons">
-            <button class="btn-secondary" id="historyBtn">
-                <i class="fas fa-history"></i> Riwayat
-            </button>
-            <button class="dark-mode-toggle" id="darkModeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </header>
 
-    <div class="container" id="mainContainer">
-        <div class="start-screen" id="startScreen">
-            <div class="start-title">Selamat Belajar!</div>
-            <p>Latih ingatan Anda dengan menghafal berbagai asosiasi</p>
-            
-            <div class="category-selector" id="categorySelector">
-                <!-- Kategori akan diisi oleh JavaScript -->
-            </div>
-            
-            <div class="start-buttons">
-                <button class="btn-primary" id="startBtn">
-                    <i class="fas fa-play"></i> Mulai Belajar
-                </button>
-                <button class="btn-secondary" id="resetBtn">
-                    <i class="fas fa-sync-alt"></i> Reset
-                </button>
-            </div>
-        </div>
+  <h1>Mohon Maaf</h1>
 
-        <div class="display-container" id="displayContainer">
-            <div class="pair-display">
-                <div class="number" id="numberDisplay">-</div>
-                <div class="word" id="wordDisplay">-</div>
-            </div>
-        </div>
+  <div class="content">
+    <p>demi hati yang lebih tenang, saya sudah menghapus konten sebelumnya. 
+    Ada hal-hal yang membuat saya merasa bersalah, dan untuk itu saya memilih melepaskannya.</p>
 
-        <div class="question-container" id="questionContainer">
-            <div class="question" id="questionText">Pertanyaan</div>
-            <div class="options" id="optionsContainer">
-                <!-- Opsi akan diisi oleh JavaScript -->
-            </div>
-            <div class="controls">
-                <button class="btn-primary" id="nextBtn">
-                    <i class="fas fa-arrow-right"></i> Lanjutkan
-                </button>
-            </div>
-        </div>
-    </div>
+    <p>Tapi dari semua ini, ada pelajaran kecil yang bisa kita ambil:</p>
 
-    <div class="history-container" id="historyContainer">
-        <div class="history-title">
-            <i class="fas fa-history"></i> Riwayat Skor
-        </div>
-        <div class="history-list" id="historyList">
-            <!-- Riwayat akan diisi oleh JavaScript -->
-        </div>
-        <div class="controls">
-            <button class="btn-secondary" id="backBtn">
-                <i class="fas fa-arrow-left"></i> Kembali
-            </button>
-        </div>
-    </div>
-    <script>
-        alert ("just because you didn't give up doesn't mean you will win")
-        // Database besar asosiasi yang sangat bervariasi, dikelompokkan berdasarkan kategori
-        const associationDatabase = {
-            hewan: [
-                { number: "25", word: "ayam" },
-                { number: "43", word: "kuda" },
-                { number: "18", word: "kambing" },
-                { number: "32", word: "ikan" },
-                { number: "47", word: "bebek" },
-                { number: "12", word: "kelinci" },
-                { number: "29", word: "angsa" },
-                { number: "54", word: "kucing" },
-                { number: "36", word: "anjing" },
-                { number: "21", word: "burung" }
-            ],
-            teknologi: [
-                { number: "89", word: "spring" },
-                { number: "12", word: "clutch" },
-                { number: "34", word: "shaft" },
+    <p><b>Kesempatan itu tidak datang dua kali.</b> Apa yang hilang kemarin, mungkin tak akan pernah kembali.</p>
+
+    <p><b>Kesempatan kedua itu anugerah.</b> Tidak semua orang mendapatkannya, maka jika kamu diberi, gunakan dengan sebaik-baiknya.</p>
+
+    <p><b>Hati yang tenang</b> lebih berharga dari pencapaian apapun. Karena dari situlah semua langkah kita bisa jadi lebih ringan.</p>
+
+    <p>Jadi, kalau kamu membaca ini, anggaplah hari kemarin adalah “ujian kecil”. 
+    Dan hari ini adalah kesempatan emasmu yang baru.</p>
+  </div>
+
+</body>
+</html>
+34", word: "shaft" },
                 { number: "56", word: "gear" },
                 { number: "78", word: "bearing" },
                 { number: "90", word: "piston" },
@@ -779,6 +552,7 @@
     </script>
 </body>
 </html>
+
 
 
 
