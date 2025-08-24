@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asosiasi Premium</title>
+    <title>Memory Test</title>
     <style>
         :root {
             --bg-color: #f5f5f5;
@@ -116,6 +116,29 @@
             font-size: 2rem;
             color: var(--primary-color);
             margin-bottom: 20px;
+        }
+
+        .category-selector {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 10px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .category-btn:hover, .category-btn.selected {
+            background-color: var(--primary-color);
+            color: white;
         }
 
         .start-buttons {
@@ -236,6 +259,10 @@
             .start-buttons {
                 flex-direction: column;
             }
+            
+            .category-selector {
+                flex-direction: column;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -243,7 +270,7 @@
 </head>
 <body>
     <header>
-        <h1>Asosiasi Premium</h1>
+        <h1>Memory Test</h1>
         <div class="nav-buttons">
             <button class="btn-secondary" id="historyBtn">
                 <i class="fas fa-history"></i> Riwayat
@@ -258,6 +285,11 @@
         <div class="start-screen" id="startScreen">
             <div class="start-title">Selamat Belajar!</div>
             <p>Latih ingatan Anda dengan menghafal berbagai asosiasi</p>
+            
+            <div class="category-selector" id="categorySelector">
+                <!-- Kategori akan diisi oleh JavaScript -->
+            </div>
+            
             <div class="start-buttons">
                 <button class="btn-primary" id="startBtn">
                     <i class="fas fa-play"></i> Mulai Belajar
@@ -301,106 +333,108 @@
             </button>
         </div>
     </div>
-
+<p>Created by Cahya. S</p>
     <script>
-        // Database besar asosiasi yang sangat bervariasi
-        const associationDatabase = [
-            // Hewan
-            { number: "25", word: "ayam" },
-            { number: "43", word: "kuda" },
-            { number: "18", word: "kambing" },
-            { number: "32", word: "ikan" },
-            { number: "47", word: "bebek" },
-            { number: "12", word: "kelinci" },
-            { number: "29", word: "angsa" },
-            { number: "54", word: "kucing" },
-            { number: "36", word: "anjing" },
-            { number: "21", word: "burung" },
-            
-            // Teknologi
-            { number: "89", word: "spring" },
-            { number: "12", word: "clutch" },
-            { number: "34", word: "shaft" },
-            { number: "56", word: "gear" },
-            { number: "78", word: "bearing" },
-            { number: "90", word: "piston" },
-            { number: "23", word: "valve" },
-            { number: "45", word: "sensor" },
-            { number: "67", word: "module" },
-            { number: "89", word: "circuit" },
-            
-            // Buah
-            { number: "11", word: "apel" },
-            { number: "22", word: "jeruk" },
-            { number: "33", word: "mangga" },
-            { number: "44", word: "anggur" },
-            { number: "55", word: "pisang" },
-            { number: "66", word: "semangka" },
-            { number: "77", word: "melon" },
-            { number: "88", word: "nanas" },
-            { number: "99", word: "pepaya" },
-            { number: "100", word: "durian" },
-            
-            // Warna
-            { number: "101", word: "merah" },
-            { number: "202", word: "biru" },
-            { number: "303", word: "hijau" },
-            { number: "404", word: "kuning" },
-            { number: "505", word: "ungu" },
-            { number: "606", word: "orange" },
-            { number: "707", word: "pink" },
-            { number: "808", word: "coklat" },
-            { number: "909", word: "hitam" },
-            { number: "110", word: "putih" },
-            
-            // Kota
-            { number: "123", word: "jakarta" },
-            { number: "456", word: "bandung" },
-            { number: "789", word: "surabaya" },
-            { number: "321", word: "medan" },
-            { number: "654", word: "yogyakarta" },
-            { number: "987", word: "bali" },
-            { number: "135", word: "palembang" },
-            { number: "246", word: "makassar" },
-            { number: "357", word: "batam" },
-            { number: "468", word: "pekanbaru" },
-            
-            // Negara
-            { number: "111", word: "indonesia" },
-            { number: "222", word: "malaysia" },
-            { number: "333", word: "singapura" },
-            { number: "444", word: "thailand" },
-            { number: "555", word: "vietnam" },
-            { number: "666", word: "jepang" },
-            { number: "777", word: "korea" },
-            { number: "888", word: "amerika" },
-            { number: "999", word: "inggris" },
-            { number: "000", word: "australia" },
-            
-            // Olahraga
-            { number: "112", word: "sepakbola" },
-            { number: "223", word: "badminton" },
-            { number: "334", word: "basket" },
-            { number: "445", word: "tenis" },
-            { number: "556", word: "renang" },
-            
-            // Profesi
-            { number: "121", word: "dokter" },
-            { number: "232", word: "guru" },
-            { number: "343", word: "polisi" },
-            { number: "454", word: "programmer" },
-            { number: "565", word: "arsitek" },
-            
-            // Transportasi
-            { number: "131", word: "mobil" },
-            { number: "242", word: "motor" },
-            { number: "353", word: "pesawat" },
-            { number: "464", word: "kereta" },
-            { number: "575", word: "kapal" }
-        ];
+        // Database besar asosiasi yang sangat bervariasi, dikelompokkan berdasarkan kategori
+        const associationDatabase = {
+            hewan: [
+                { number: "25", word: "ayam" },
+                { number: "43", word: "kuda" },
+                { number: "18", word: "kambing" },
+                { number: "32", word: "ikan" },
+                { number: "47", word: "bebek" },
+                { number: "12", word: "kelinci" },
+                { number: "29", word: "angsa" },
+                { number: "54", word: "kucing" },
+                { number: "36", word: "anjing" },
+                { number: "21", word: "burung" }
+            ],
+            teknologi: [
+                { number: "89", word: "spring" },
+                { number: "12", word: "clutch" },
+                { number: "34", word: "shaft" },
+                { number: "56", word: "gear" },
+                { number: "78", word: "bearing" },
+                { number: "90", word: "piston" },
+                { number: "23", word: "valve" },
+                { number: "45", word: "sensor" },
+                { number: "67", word: "module" },
+                { number: "89", word: "circuit" }
+            ],
+            buah: [
+                { number: "11", word: "apel" },
+                { number: "22", word: "jeruk" },
+                { number: "33", word: "mangga" },
+                { number: "44", word: "anggur" },
+                { number: "55", word: "pisang" },
+                { number: "66", word: "semangka" },
+                { number: "77", word: "melon" },
+                { number: "88", word: "nanas" },
+                { number: "99", word: "pepaya" },
+                { number: "100", word: "durian" }
+            ],
+            warna: [
+                { number: "101", word: "merah" },
+                { number: "202", word: "biru" },
+                { number: "303", word: "hijau" },
+                { number: "404", word: "kuning" },
+                { number: "505", word: "ungu" },
+                { number: "606", word: "orange" },
+                { number: "707", word: "pink" },
+                { number: "808", word: "coklat" },
+                { number: "909", word: "hitam" },
+                { number: "110", word: "putih" }
+            ],
+            kota: [
+                { number: "123", word: "jakarta" },
+                { number: "456", word: "bandung" },
+                { number: "789", word: "surabaya" },
+                { number: "321", word: "medan" },
+                { number: "654", word: "yogyakarta" },
+                { number: "987", word: "bali" },
+                { number: "135", word: "palembang" },
+                { number: "246", word: "makassar" },
+                { number: "357", word: "batam" },
+                { number: "468", word: "pekanbaru" }
+            ],
+            negara: [
+                { number: "111", word: "indonesia" },
+                { number: "222", word: "malaysia" },
+                { number: "333", word: "singapura" },
+                { number: "444", word: "thailand" },
+                { number: "555", word: "vietnam" },
+                { number: "666", word: "jepang" },
+                { number: "777", word: "korea" },
+                { number: "888", word: "amerika" },
+                { number: "999", word: "inggris" },
+                { number: "000", word: "australia" }
+            ],
+            olahraga: [
+                { number: "112", word: "sepakbola" },
+                { number: "223", word: "badminton" },
+                { number: "334", word: "basket" },
+                { number: "445", word: "tenis" },
+                { number: "556", word: "renang" }
+            ],
+            profesi: [
+                { number: "121", word: "dokter" },
+                { number: "232", word: "guru" },
+                { number: "343", word: "polisi" },
+                { number: "454", word: "programmer" },
+                { number: "565", word: "arsitek" }
+            ],
+            transportasi: [
+                { number: "131", word: "mobil" },
+                { number: "242", word: "motor" },
+                { number: "353", word: "pesawat" },
+                { number: "464", word: "kereta" },
+                { number: "575", word: "kapal" }
+            ]
+        };
 
         // Elemen DOM
         const startScreen = document.getElementById('startScreen');
+        const categorySelector = document.getElementById('categorySelector');
         const startBtn = document.getElementById('startBtn');
         const resetBtn = document.getElementById('resetBtn');
         const displayContainer = document.getElementById('displayContainer');
@@ -419,13 +453,14 @@
 
         // Variabel kontrol
         let availableAssociations = [];
-        let usedAssociations = [];
+        let usedAssociations = {};
         let currentPairs = [];
         let currentIndex = 0;
         let timer;
         let secondsLeft = 3.5;
         let currentQuestion = {};
         let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
+        let selectedCategory = null;
 
         // Inisialisasi
         initialize();
@@ -437,23 +472,60 @@
                 darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
             
-            // Reset asosiasi yang tersedia
-            resetAvailableAssociations();
+            // Inisialisasi usedAssociations untuk setiap kategori
+            Object.keys(associationDatabase).forEach(category => {
+                usedAssociations[category] = [];
+            });
+            
+            // Tampilkan pilihan kategori
+            renderCategorySelector();
             
             // Tampilkan riwayat jika ada
             renderHistory();
         }
 
+        // Fungsi untuk menampilkan pilihan kategori
+        function renderCategorySelector() {
+            categorySelector.innerHTML = '';
+            
+            Object.keys(associationDatabase).forEach(category => {
+                const button = document.createElement('button');
+                button.classList.add('category-btn');
+                button.textContent = category;
+                button.addEventListener('click', () => {
+                    // Hapus seleksi dari semua tombol
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Tandai kategori yang dipilih
+                    button.classList.add('selected');
+                    selectedCategory = category;
+                });
+                
+                categorySelector.appendChild(button);
+            });
+            
+            // Pilih kategori pertama secara default
+            if (Object.keys(associationDatabase).length > 0) {
+                const firstCategory = Object.keys(associationDatabase)[0];
+                selectedCategory = firstCategory;
+                document.querySelector('.category-btn').classList.add('selected');
+            }
+        }
+
         // Fungsi untuk mereset asosiasi yang tersedia
         function resetAvailableAssociations() {
+            if (!selectedCategory) return;
+            
             // Jika sudah menggunakan lebih dari 80% database, reset penggunaannya
-            if (usedAssociations.length > 0.8 * associationDatabase.length) {
-                usedAssociations = [];
+            if (usedAssociations[selectedCategory].length > 0.8 * associationDatabase[selectedCategory].length) {
+                usedAssociations[selectedCategory] = [];
             }
             
             // Buat daftar asosiasi yang belum digunakan
-            availableAssociations = associationDatabase.filter(assoc => 
-                !usedAssociations.some(used => 
+            availableAssociations = associationDatabase[selectedCategory].filter(assoc => 
+                !usedAssociations[selectedCategory].some(used => 
                     used.number === assoc.number && used.word === assoc.word
                 )
             );
@@ -467,12 +539,21 @@
 
         // Fungsi untuk memulai sesi belajar
         function startLearningSession() {
+            if (!selectedCategory) {
+                alert('Pilih kategori terlebih dahulu!');
+                return;
+            }
+            
             startScreen.style.display = 'none';
             displayContainer.style.display = 'flex';
             questionContainer.style.display = 'none';
             
+            // Reset asosiasi yang tersedia untuk kategori yang dipilih
+            resetAvailableAssociations();
+            
             // Jika tidak cukup asosiasi tersedia, reset
             if (availableAssociations.length < 4) {
+                usedAssociations[selectedCategory] = [];
                 resetAvailableAssociations();
             }
             
@@ -480,7 +561,7 @@
             currentPairs = availableAssociations.slice(0, 4);
             
             // Pindahkan ke usedAssociations
-            usedAssociations.push(...currentPairs);
+            usedAssociations[selectedCategory].push(...currentPairs);
             availableAssociations = availableAssociations.slice(4);
             
             currentIndex = 0;
@@ -535,7 +616,7 @@
                     options: [randomPair.word]
                 };
                 
-                // Tambahkan opsi salah dari pasangan lain
+                // Tambahkan opsi salah dari pasangan lain dalam kategori yang sama
                 const otherPairs = currentPairs.filter(p => p !== randomPair);
                 while (currentQuestion.options.length < 4 && otherPairs.length > 0) {
                     const randomOption = otherPairs[Math.floor(Math.random() * otherPairs.length)].word;
@@ -546,7 +627,7 @@
                     }
                 }
                 
-                // Jika masih kurang, ambil dari asosiasi lain yang belum digunakan
+                // Jika masih kurang, ambil dari asosiasi lain dalam kategori yang sama
                 while (currentQuestion.options.length < 4 && availableAssociations.length > 0) {
                     const randomAssoc = availableAssociations[Math.floor(Math.random() * availableAssociations.length)];
                     if (!currentQuestion.options.includes(randomAssoc.word)) {
@@ -562,34 +643,7 @@
                     options: [randomPair.number]
                 };
                 
-                                // Tambahkan opsi salah dari pasangan lain
-                const otherPairs = currentPairs.filter(p => p !== randomPair);
-                while (currentQuestion.options.length < 4 && otherPairs.length > 0) {
-                    const randomOption = otherPairs[Math.floor(Math.random() * otherPairs.length)].word;
-                    if (!currentQuestion.options.includes(randomOption)) {
-                        currentQuestion.options.push(randomOption);
-                        // Hapus dari otherPairs untuk menghindari duplikat
-                        otherPairs.splice(otherPairs.findIndex(p => p.word === randomOption), 1);
-                    }
-                }
-                
-                // Jika masih kurang, ambil dari asosiasi lain yang belum digunakan
-                while (currentQuestion.options.length < 4 && availableAssociations.length > 0) {
-                    const randomAssoc = availableAssociations[Math.floor(Math.random() * availableAssociations.length)];
-                    if (!currentQuestion.options.includes(randomAssoc.word)) {
-                        currentQuestion.options.push(randomAssoc.word);
-                    }
-                }
-            } else {
-                // Pertanyaan kata ke angka
-                currentQuestion = {
-                    type: 'wordToNumber',
-                    question: `${randomPair.word} adalah?`,
-                    correctAnswer: randomPair.number,
-                    options: [randomPair.number]
-                };
-                
-                // Tambahkan opsi salah dari pasangan lain
+                // Tambahkan opsi salah dari pasangan lain dalam kategori yang sama
                 const otherPairs = currentPairs.filter(p => p !== randomPair);
                 while (currentQuestion.options.length < 4 && otherPairs.length > 0) {
                     const randomOption = otherPairs[Math.floor(Math.random() * otherPairs.length)].number;
@@ -600,7 +654,7 @@
                     }
                 }
                 
-                // Jika masih kurang, ambil dari asosiasi lain yang belum digunakan
+                // Jika masih kurang, ambil dari asosiasi lain dalam kategori yang sama
                 while (currentQuestion.options.length < 4 && availableAssociations.length > 0) {
                     const randomAssoc = availableAssociations[Math.floor(Math.random() * availableAssociations.length)];
                     if (!currentQuestion.options.includes(randomAssoc.number)) {
@@ -680,7 +734,7 @@
                 
                 historyItem.innerHTML = `
                     <div>
-                        <div>Sesi ${index + 1}</div>
+                        <div>Sesi ${index + 1} (${score.category})</div>
                         <div style="font-size: 0.9rem; opacity: 0.8;">${dateStr}</div>
                     </div>
                     <div style="font-weight: bold; color: var(--primary-color);">${score.correct}/${score.total}</div>
