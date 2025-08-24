@@ -1,127 +1,567 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tentang Kesempatan Kedua</title>
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asosiasi Premium</title>
+    <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --container-bg: #ffffff;
+            --primary-color: #6a1b9a;
+            --primary-light: #9c4dcc;
+            --secondary-color: #e0e0e0;
+            --correct-color: #4caf50;
+            --wrong-color: #f44336;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: #f1f1f1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 30px 15px;
-    }
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #f3e5f5;
+            --container-bg: #1e1e1e;
+            --primary-color: #9c4dcc;
+            --primary-light: #ba68c8;
+            --secondary-color: #444;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      font-weight: bold;
-      text-align: center;
-      letter-spacing: 1px;
-      animation: fadeDown 0.8s ease forwards;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
 
-    .content {
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 25px 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      line-height: 1.7;
-      font-size: 1.05rem;
-      text-align: left;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards 0.4s;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    .content p {
-      margin-bottom: 15px;
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
 
-    footer {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #e5e5e5;
-      max-width: 650px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards 1.2s;
-    }
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
 
-    footer p {
-      margin-bottom: 8px;
-    }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
 
-    footer small {
-      font-style: italic;
-      opacity: 0.8;
-    }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    /* Animations */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .content {
-        padding: 20px;
-        font-size: 1rem;
-      }
-      footer {
-        font-size: 0.85rem;
-      }
-    }
-  </style>
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .start-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .display-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pair-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .number {
+            color: var(--primary-color);
+        }
+
+        .word {
+            color: #e91e63;
+            margin-top: 15px;
+        }
+
+        .question-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .option {
+            padding: 15px;
+            border-radius: 15px;
+            background-color: var(--secondary-color);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .option.correct {
+            background-color: var(--correct-color);
+            color: white;
+        }
+
+        .option.wrong {
+            background-color: var(--wrong-color);
+            color: white;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .history-container {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            background-color: var(--container-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .history-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .history-item {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .pair-display {
+                font-size: 2.5rem;
+            }
+            
+            .start-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <header>
+        <h1>Asosiasi Premium</h1>
+        <div class="nav-buttons">
+            <button class="btn-secondary" id="historyBtn">
+                <i class="fas fa-history"></i> Riwayat
+            </button>
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
 
-  <h1>Mohon Maaf</h1>
+    <div class="container" id="mainContainer">
+        <div class="start-screen" id="startScreen">
+            <div class="start-title">Selamat Belajar!</div>
+            <p>Latih ingatan Anda dengan menghafal berbagai asosiasi</p>
+            <div class="start-buttons">
+                <button class="btn-primary" id="startBtn">
+                    <i class="fas fa-play"></i> Mulai Belajar
+                </button>
+                <button class="btn-secondary" id="resetBtn">
+                    <i class="fas fa-sync-alt"></i> Reset
+                </button>
+            </div>
+        </div>
 
-  <div class="content">
-    <p>demi hati yang lebih tenang, saya sudah menghapus konten sebelumnya. 
-    Ada hal-hal yang membuat saya merasa bersalah, dan untuk itu saya memilih melepaskannya.</p>
+        <div class="display-container" id="displayContainer">
+            <div class="pair-display">
+                <div class="number" id="numberDisplay">-</div>
+                <div class="word" id="wordDisplay">-</div>
+            </div>
+        </div>
 
-    <p>Tapi dari semua ini, ada pelajaran kecil yang bisa kita ambil:</p>
+        <div class="question-container" id="questionContainer">
+            <div class="question" id="questionText">Pertanyaan</div>
+            <div class="options" id="optionsContainer">
+                <!-- Opsi akan diisi oleh JavaScript -->
+            </div>
+            <div class="controls">
+                <button class="btn-primary" id="nextBtn">
+                    <i class="fas fa-arrow-right"></i> Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <p><b>Kesempatan itu tidak datang dua kali.</b> Apa yang hilang kemarin, mungkin tak akan pernah kembali.</p>
+    <div class="history-container" id="historyContainer">
+        <div class="history-title">
+            <i class="fas fa-history"></i> Riwayat Skor
+        </div>
+        <div class="history-list" id="historyList">
+            <!-- Riwayat akan diisi oleh JavaScript -->
+        </div>
+        <div class="controls">
+            <button class="btn-secondary" id="backBtn">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+        </div>
+    </div>
 
-    <p><b>Kesempatan kedua itu anugerah.</b> Tidak semua orang mendapatkannya, maka jika kamu diberi, gunakan dengan sebaik-baiknya.</p>
+    <script>
+        // Database besar asosiasi yang sangat bervariasi
+        const associationDatabase = [
+            // Hewan
+            { number: "25", word: "ayam" },
+            { number: "43", word: "kuda" },
+            { number: "18", word: "kambing" },
+            { number: "32", word: "ikan" },
+            { number: "47", word: "bebek" },
+            { number: "12", word: "kelinci" },
+            { number: "29", word: "angsa" },
+            { number: "54", word: "kucing" },
+            { number: "36", word: "anjing" },
+            { number: "21", word: "burung" },
+            
+            // Teknologi
+            { number: "89", word: "spring" },
+            { number: "12", word: "clutch" },
+            { number: "34", word: "shaft" },
+            { number: "56", word: "gear" },
+            { number: "78", word: "bearing" },
+            { number: "90", word: "piston" },
+            { number: "23", word: "valve" },
+            { number: "45", word: "sensor" },
+            { number: "67", word: "module" },
+            { number: "89", word: "circuit" },
+            
+            // Buah
+            { number: "11", word: "apel" },
+            { number: "22", word: "jeruk" },
+            { number: "33", word: "mangga" },
+            { number: "44", word: "anggur" },
+            { number: "55", word: "pisang" },
+            { number: "66", word: "semangka" },
+            { number: "77", word: "melon" },
+            { number: "88", word: "nanas" },
+            { number: "99", word: "pepaya" },
+            { number: "100", word: "durian" },
+            
+            // Warna
+            { number: "101", word: "merah" },
+            { number: "202", word: "biru" },
+            { number: "303", word: "hijau" },
+            { number: "404", word: "kuning" },
+            { number: "505", word: "ungu" },
+            { number: "606", word: "orange" },
+            { number: "707", word: "pink" },
+            { number: "808", word: "coklat" },
+            { number: "909", word: "hitam" },
+            { number: "110", word: "putih" },
+            
+            // Kota
+            { number: "123", word: "jakarta" },
+            { number: "456", word: "bandung" },
+            { number: "789", word: "surabaya" },
+            { number: "321", word: "medan" },
+            { number: "654", word: "yogyakarta" },
+            { number: "987", word: "bali" },
+            { number: "135", word: "palembang" },
+            { number: "246", word: "makassar" },
+            { number: "357", word: "batam" },
+            { number: "468", word: "pekanbaru" },
+            
+            // Negara
+            { number: "111", word: "indonesia" },
+            { number: "222", word: "malaysia" },
+            { number: "333", word: "singapura" },
+            { number: "444", word: "thailand" },
+            { number: "555", word: "vietnam" },
+            { number: "666", word: "jepang" },
+            { number: "777", word: "korea" },
+            { number: "888", word: "amerika" },
+            { number: "999", word: "inggris" },
+            { number: "000", word: "australia" },
+            
+            // Olahraga
+            { number: "112", word: "sepakbola" },
+            { number: "223", word: "badminton" },
+            { number: "334", word: "basket" },
+            { number: "445", word: "tenis" },
+            { number: "556", word: "renang" },
+            
+            // Profesi
+            { number: "121", word: "dokter" },
+            { number: "232", word: "guru" },
+            { number: "343", word: "polisi" },
+            { number: "454", word: "programmer" },
+            { number: "565", word: "arsitek" },
+            
+            // Transportasi
+            { number: "131", word: "mobil" },
+            { number: "242", word: "motor" },
+            { number: "353", word: "pesawat" },
+            { number: "464", word: "kereta" },
+            { number: "575", word: "kapal" }
+        ];
 
-    <p><b>Hati yang tenang</b> lebih berharga dari pencapaian apapun. Karena dari situlah semua langkah kita bisa jadi lebih ringan.</p>
+        // Elemen DOM
+        const startScreen = document.getElementById('startScreen');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const displayContainer = document.getElementById('displayContainer');
+        const numberDisplay = document.getElementById('numberDisplay');
+        const wordDisplay = document.getElementById('wordDisplay');
+        const questionContainer = document.getElementById('questionContainer');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const nextBtn = document.getElementById('nextBtn');
+        const historyBtn = document.getElementById('historyBtn');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
+        const backBtn = document.getElementById('backBtn');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const mainContainer = document.getElementById('mainContainer');
 
-    <p>Jadi, kalau kamu membaca ini, anggaplah hari kemarin adalah “ujian kecil”. 
-    Dan hari ini adalah kesempatan emasmu yang baru.</p>
-  </div>
+        // Variabel kontrol
+        let availableAssociations = [];
+        let usedAssociations = [];
+        let currentPairs = [];
+        let currentIndex = 0;
+        let timer;
+        let secondsLeft = 3.5;
+        let currentQuestion = {};
+        let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
 
-</body>
-</html>
+        // Inisialisasi
+        initialize();
+
+        function initialize() {
+            // Set dark mode jika ada preferensi
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            // Reset asosiasi yang tersedia
+            resetAvailableAssociations();
+            
+            // Tampilkan riwayat jika ada
+            renderHistory();
+        }
+
+        // Fungsi untuk mereset asosiasi yang tersedia
+        function resetAvailableAssociations() {
+            // Jika sudah menggunakan lebih dari 80% database, reset penggunaannya
+            if (usedAssociations.length > 0.8 * associationDatabase.length) {
+                usedAssociations = [];
+            }
+            
+            // Buat daftar asosiasi yang belum digunakan
+            availableAssociations = associationDatabase.filter(assoc => 
+                !usedAssociations.some(used => 
+                    used.number === assoc.number && used.word === assoc.word
+                )
+            );
+            
+            // Acak urutan asosiasi
+            for (let i = availableAssociations.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [availableAssociations[i], availableAssociations[j]] = [availableAssociations[j], availableAssociations[i]];
+            }
+        }
+
+        // Fungsi untuk memulai sesi belajar
+        function startLearningSession() {
+            startScreen.style.display = 'none';
+            displayContainer.style.display = 'flex';
+            questionContainer.style.display = 'none';
+            
+            // Jika tidak cukup asosiasi tersedia, reset
+            if (availableAssociations.length < 4) {
+                resetAvailableAssociations();
+            }
+            
+            // Pilih 4 pasangan acak dari asosiasi yang tersedia
+            currentPairs = availableAssociations.slice(0, 4);
+            
+            // Pindahkan ke usedAssociations
+            usedAssociations.push(...currentPairs);
+            availableAssociations = availableAssociations.slice(4);
+            
+            currentIndex = 0;
+            
+            // Tampilkan pasangan pertama
+            showNextPair();
+        }
+
+        // Fungsi untuk menampilkan pasangan berikutnya
+        function showNextPair() {
+            clearInterval(timer);
+            
+            if (currentIndex < currentPairs.length) {
+                const pair = currentPairs[currentIndex];
+                numberDisplay.textContent = pair.number;
+                wordDisplay.textContent = pair.word;
+                secondsLeft = 3.5;
+                
+                timer = setInterval(() => {
+                    secondsLeft -= 0.1;
+                    
+                    if (secondsLeft <= 0) {
+                        clearInterval(timer);
+                        currentIndex++;
+                        showNextPair();
+                    }
+                }, 100);
+            } else {
+                // Selesai menampilkan pasangan, tampilkan pertanyaan
+                showQuestion();
+            }
+        }
+
+        // Fungsi untuk menampilkan pertanyaan
+        function showQuestion() {
+            clearInterval(timer);
+            displayContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
+            
+            // Pilih pasangan acak dari yang sudah ditampilkan
+            const randomPair = currentPairs[Math.floor(Math.random() * currentPairs.length)];
+            
+            // Pilih jenis pertanyaan acak
+            const isNumberToWord = Math.random() > 0.5;
+            
+            if (isNumberToWord) {
+                // Pertanyaan angka ke kata
+                currentQuestion = {
+                    type: 'numberToWord',
+                    question: `${randomPair.number} adalah?`,
+                    correctAnswer: randomPair.word,
+                    options: [randomPair.word]
+                };
+                
+                // Tambahkan opsi salah dari pasangan lain
+                const otherPairs = currentPairs.filter(p => p !== randomPair);
+                while (currentQuestion.options.length < 4 && otherPairs.length > 0) {
+                    const randomOption = otherPairs[Math.floor(Math.random() * otherPairs.length)].word;
+                    if (!currentQuestion.options.includes(randomOption)) {
+                        currentQuestion.options.push(randomOption);
+                        // Hapus dari otherPairs untuk menghindari duplikat
+                        otherPairs.splice(otherPairs.findIndex(p => p.word === randomOption), 1);
+                    }
+                }
+                
+                // Jika masih kurang, ambil dari asosiasi lain yang belum digunakan
+                while (currentQuestion.options.length < 4 && availableAssociations.length > 0) {
+                    const randomAssoc = availableAssociations[Math.floor(Math.random() * availableAssociations.length)];
+                    if (!currentQuestion.options.includes(randomAssoc.word)) {
+                        currentQuestion.options.push(randomAssoc.word);
+                    }
+                }
+            } else {
+                // Pertanyaan kata ke angka
+                currentQuestion = {
+                    type: 'wordToNumber',
+                    question: `${randomPair.word} adalah?`,
+                    correctAnswer: randomPair.number,
+                    options: [randomPair.number]
+                };
+                
+                // Tambahkan opsi salah dari pasangan lain
+                const otherPairs = currentPairs.filter(p => p !== randomPair);
+                w
